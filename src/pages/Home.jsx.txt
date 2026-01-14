@@ -1,0 +1,10 @@
+function Home() {
+  return (
+    <div style={{ padding: "40px" }}>
+      <h1>Client Management System</h1>
+      <p>Microservices Architecture - PFE</p>
+    </div>
+  );
+}
+
+export default Home;
