@@ -1,107 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, LogIn } from 'lucide-react';
-import { Button, Input } from '../components/ui';
+import { useNavigate, Link } from 'react-router-dom';
+import { LogIn } from 'lucide-react';
+import FormInput from '../components/FormInput';
+import authService from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-        setLoading(true);
-
-        // Mock authentication
-        setTimeout(() => {
-            if (formData.email === 'admin@pfe.com' && formData.password === 'password') {
-                navigate('/');
-            } else {
-                setError('Invalid email or password. Use admin@pfe.com / password');
-            }
-            setLoading(false);
-        }, 1000);
+        try { const u = await authService.login(formData); login(u); navigate('/products'); } catch (err) { alert('Failed'); }
     };
 
     return (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
-        }}>
-            <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '2.5rem' }}>
-                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                    <div style={{
-                        background: '#eff6ff',
-                        width: '64px',
-                        height: '64px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 auto 1rem',
-                        color: '#2563eb'
-                    }}>
-                        <Lock size={32} />
-                    </div>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Welcome Back</h1>
-                    <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Login to manage your microservices</p>
-                </div>
-
-                {error && (
-                    <div style={{
-                        backgroundColor: '#fef2f2',
-                        color: '#b91c1c',
-                        padding: '0.75rem',
-                        borderRadius: '6px',
-                        marginBottom: '1rem',
-                        fontSize: '0.875rem',
-                        border: '1px solid #fee2e2'
-                    }}>
-                        {error}
-                    </div>
-                )}
-
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', padding: '5rem 0' }}>
+            <div style={{ background: 'white', padding: '2.5rem', borderRadius: '16px', border: '1px solid var(--border)', width: '100%', maxWidth: '400px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}><h2>Sign In</h2></div>
                 <form onSubmit={handleSubmit}>
-                    <Input
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                        placeholder="admin@pfe.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <Input
-                        label="Password"
-                        name="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <Button
-                        type="submit"
-                        style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}
-                        icon={loading ? null : LogIn}
-                        className={loading ? 'opacity-50' : ''}
-                    >
-                        {loading ? 'Authenticating...' : 'Sign In'}
-                    </Button>
+                    <FormInput label="Email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+                    <FormInput label="Password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required />
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem' }}>Login</button>
                 </form>
+                <p style={{ textAlign: 'center', marginTop: '1.5rem' }}>New here? <Link to="/register" style={{ color: 'var(--primary)' }}>Register</Link></p>
             </div>
         </div>
     );
 };
-
 export default Login;

@@ -1,65 +1,20 @@
 import axios from 'axios';
 
-// Mock API URL for Products Microservice
-const API_URL = 'http://localhost:8082/api/products';
+const PRODUCT_API = 'http://localhost:8082/api/products';
 
 const productService = {
-    /**
-     * Fetch all products for the client store.
-     */
     getProducts: async () => {
         try {
-            const response = await axios.get(API_URL);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching products:', error);
-            // Mock data for demo/fallback
+            // return (await axios.get(PRODUCT_API)).data;
             return [
-                {
-                    id: 1,
-                    name: 'Classic White Sneakers',
-                    price: 89.99,
-                    description: 'Timeless white sneakers for everyday comfort.',
-                    image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500'
-                },
-                {
-                    id: 2,
-                    name: 'Professional Laptop',
-                    price: 1249.00,
-                    description: 'High-performance laptop for all your work needs.',
-                    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500'
-                },
-                {
-                    id: 3,
-                    name: 'Noise-Cancelling Headphones',
-                    price: 299.50,
-                    description: 'Premium sound quality with active noise cancellation.',
-                    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500'
-                },
-                {
-                    id: 4,
-                    name: 'Ergonomic Work Chair',
-                    price: 349.99,
-                    description: 'Adjustable chair designed for long hours of focus.',
-                    image: 'https://images.unsplash.com/photo-1505843490701-515a00718600?w=500'
-                },
-                {
-                    id: 5,
-                    name: 'Smart Fitness Watch',
-                    price: 199.00,
-                    description: 'Track your health and activity in real-time.',
-                    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500'
-                },
-                {
-                    id: 6,
-                    name: 'Minimalist Wall Clock',
-                    price: 45.00,
-                    description: 'Elegant design that complements any modern interior.',
-                    image: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=500'
-                }
+                { id: 1, name: 'Bio Quinoa Selection', price: 12.50, category: 'Gluten-Free', description: 'Premium organic white quinoa.', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400' },
+                { id: 2, name: 'Pure Forest Honey', price: 8.99, category: 'Low-Sugar', description: 'Raw honey from local sustainable bees.', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400' },
+                { id: 7, name: 'Hearthy Oats (Low GI)', price: 6.50, category: 'Diabetic', description: 'Ideal for glucose management.', image: 'https://images.unsplash.com/photo-1586444248902-2f64eddf13cf?w=400' },
+                { id: 3, name: 'Premium Almond Milk', price: 4.20, category: 'Dairy-Free', description: 'Natural unsweetened dairy alternative.', image: 'https://images.unsplash.com/photo-1564419320461-6870880221ad?w=400' },
+                { id: 4, name: 'Organic Chia Seeds', price: 7.50, category: 'Superfood', description: 'Rich in fiber and omega-3.', image: 'https://images.unsplash.com/photo-1511216113906-8f57bb83e776?w=400' },
+                { id: 5, name: 'Vitality Green Juice', price: 5.99, category: 'Vitamin Boost', description: 'Cold pressed organic nutrients.', image: 'https://images.unsplash.com/photo-1622597467822-54576fe3d1ce?w=400' }
             ];
-        }
+        } catch (e) { return []; }
     }
 };
-
 export default productService;
