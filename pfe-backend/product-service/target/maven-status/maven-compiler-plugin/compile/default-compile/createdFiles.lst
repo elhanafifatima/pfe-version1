@@ -1,4 +1,0 @@
-com\pfe\product\model\Product.class
-com\pfe\product\controller\ProductController.class
-com\pfe\product\model\Nutrition.class
-com\pfe\product\repository\ProductRepository.class
